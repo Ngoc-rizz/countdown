@@ -3,12 +3,29 @@
 namespace Modules\Settings\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Modules\Settings\Actions\SettingsUpdateAction;
+use Modules\Settings\DTOs\UpdateSettingDTO;
+use Modules\Settings\Requests\SettingsRequest;
 
 class SettingController extends Controller
 {
-    public function show(Request $request)
+    public function show()
     {
-        return view('pages.setting');
+        $setting = Auth::user()->settings;
+        return view('pages.setting', compact('setting'));
+    }
+
+    public function update(SettingsRequest $request, SettingsUpdateAction $action)
+    {
+        try {
+            $validated = $request->validated();
+            $dto = new UpdateSettingDTO(...$validated);
+            $action->execute(Auth::user(), $dto);
+
+            return back()->with('success', 'Settings updated successfully');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return back()->withErrors($e->errors())->withInput();
+        }
     }
 }

@@ -5,10 +5,9 @@ use Modules\Auth\Controllers\AuthenticatedSessionController;
 use Modules\Auth\Controllers\NewPasswordController;
 use Modules\Auth\Controllers\PasswordResetLinkController;
 use Modules\Auth\Controllers\RegisteredUserController;
+use Modules\Pomodoro\Controllers\PomodoroController;
 
-Route::get('/pomodoro', function () {
-    return view('pages.pomodoro');
-})->name('pomodoro');
+Route::get('/', [PomodoroController::class, 'index'])->name('pomodoro');
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
@@ -18,6 +17,6 @@ Route::middleware('guest')->group(function () {
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])->name('password.request');
     Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
-    Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
+    Route::get('reset-passwpord/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
     Route::post('reset-password', [NewPasswordController::class, 'store'])->name('password.store');
 });

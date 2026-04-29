@@ -72,7 +72,7 @@ export function timerHandler({ pomodoroSeconds, breakSeconds }) {
         handleFinished() {
             this.pauseTimer();
             this.skipMode();
-            console.log('Chế độ đã được chuyển đổi!');
+            console.log('Mode changed!');
         }
     };
 }

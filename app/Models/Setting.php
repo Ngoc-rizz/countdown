@@ -19,7 +19,16 @@ class Setting extends Model
         'auto_check_tasks' => 'boolean',
         'sound_enabled' => 'boolean',
     ];
-
+    public function toFrontend(): array
+    {
+        return [
+            'pomodoro'     => $this->pomodoro_minutes,
+            'break'        => $this->break_minutes,
+            'autoCheck'    => (bool) $this->auto_check_tasks,
+            'soundEnabled' => (bool) $this->sound_enabled,
+            'themeColor'   => $this->theme_color,
+        ];
+    }
     public function user()
     {
         return $this->belongsTo(User::class);

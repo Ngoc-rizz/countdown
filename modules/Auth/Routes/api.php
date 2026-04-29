@@ -1,5 +1,7 @@
 <?php
 
+namespace Modules\Auth\Routes;
+
 use Illuminate\Support\Facades\Route;
 use Modules\Auth\Controllers\AuthenticatedSessionController;
 use Modules\Auth\Controllers\ConfirmablePasswordController;
@@ -8,7 +10,6 @@ use Modules\Auth\Controllers\EmailVerificationPromptController;
 use Modules\Auth\Controllers\PasswordController;
 use Modules\Auth\Controllers\ProfileController;
 use Modules\Auth\Controllers\VerifyEmailController;
-use Modules\Settings\Controllers\SettingController;
 
 Route::middleware('auth')->group(function () {
     Route::get('verify-email', EmailVerificationPromptController::class)->name('verification.notice');
@@ -24,13 +25,9 @@ Route::middleware('auth')->group(function () {
     Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
 
     Route::middleware('verified')->group(function () {
-
         Route::get('/reports', function () {
             return view('pages.report');
         })->name('reports');
-
-        Route::get('/settings', [SettingController::class, 'show'])->name('settings');
-
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
