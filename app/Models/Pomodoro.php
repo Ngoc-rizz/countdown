@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,15 +12,21 @@ class Pomodoro extends Model
 
     protected $fillable = [
         'user_id',
+        'task_id',
         'type',
+        'status',
         'start_time',
         'end_time',
         'actual_duration',
-        'status',
+        'scheduled_duration',
     ];
 
     protected $casts = [
         'start_time' => 'datetime',
         'end_time' => 'datetime',
     ];
+    public function task()
+    {
+        return $this->belongsTo(Task::class);
+    }
 }

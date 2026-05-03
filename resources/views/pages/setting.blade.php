@@ -1,5 +1,5 @@
 <x-app-layout>
-    <section x-data="settingHandler('{{ route('settings.update') }}', @js($setting->toFrontend()))"
+    <section x-data="settingHandler('{{ route('settings.update') }}', @js($settings))"
         class="w-full h-full mb-20 lg:mb-0 max-w-7xl mx-auto flex flex-col rounded-md bg-white ">
         <form @submit.prevent="saveSetting">
             <div>

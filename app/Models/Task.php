@@ -12,12 +12,17 @@ class Task extends Model
         'est_pomodoros',
         'act_pomodoros',
         'is_done',
+        'position',
+        'note'
     ];
 
     protected $casts = [
         'is_done' => 'boolean',
     ];
-
+    public function pomodoros()
+    {
+        return $this->hasMany(Pomodoro::class);
+    }
     public function user()
     {
         return $this->belongsTo(User::class);

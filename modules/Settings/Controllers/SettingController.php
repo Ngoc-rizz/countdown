@@ -8,12 +8,13 @@ use Modules\Settings\Actions\SettingsUpdateAction;
 use Modules\Settings\DTOs\UpdateSettingDTO;
 use Modules\Settings\Requests\SettingsRequest;
 
+
 class SettingController extends Controller
 {
     public function show()
     {
-        $setting = Auth::user()->settings;
-        return view('pages.setting', compact('setting'));
+        $settings = Auth::user()->settings->toFrontend();
+        return view('pages.setting', compact('settings'));
     }
 
     public function update(SettingsRequest $request, SettingsUpdateAction $action)
@@ -22,7 +23,6 @@ class SettingController extends Controller
             $validated = $request->validated();
             $dto = new UpdateSettingDTO(...$validated);
             $action->execute(Auth::user(), $dto);
-
             return back()->with('success', 'Settings updated successfully');
         } catch (\Illuminate\Validation\ValidationException $e) {
             return back()->withErrors($e->errors())->withInput();

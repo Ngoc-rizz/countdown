@@ -6,28 +6,24 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up()
     {
-        Schema::create('pomodoro_sessions', function (Blueprint $table) {
+        Schema::create('pomodoros', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('task_id')->nullable()->constrained()->onDelete('cascade');
             $table->string('type');
             $table->timestamp('start_time');
             $table->timestamp('end_time')->nullable();
             $table->integer('actual_duration')->default(0);
+            $table->integer('scheduled_duration')->default(0);
             $table->string('status');
 
             $table->timestamps();
         });
     }
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('pomodoro_sessions');
+        Schema::dropIfExists('pomodoros');
     }
 };

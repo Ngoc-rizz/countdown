@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Pomodoro\Requests;
+namespace Modules\Pomodoro\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -14,7 +14,7 @@ class PomodoroRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'type' => 'required|in:pomodoro',
         ];
     }
 }

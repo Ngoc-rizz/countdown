@@ -25,9 +25,7 @@ class SettingsServiceProvider extends ServiceProvider
         }
 
         if (file_exists($apiPath = base_path('modules/Settings/Routes/api.php'))) {
-            Route::middleware('web')
-                ->prefix('api/v1')
-                ->group($apiPath);
+            Route::middleware('web')->group($apiPath);
         }
     }
 }

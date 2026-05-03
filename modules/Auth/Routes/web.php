@@ -7,7 +7,6 @@ use Modules\Auth\Controllers\PasswordResetLinkController;
 use Modules\Auth\Controllers\RegisteredUserController;
 use Modules\Pomodoro\Controllers\PomodoroController;
 
-Route::get('/', [PomodoroController::class, 'index'])->name('pomodoro');
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])->name('register');

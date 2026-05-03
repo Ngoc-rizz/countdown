@@ -25,5 +25,8 @@
         </x-ui.page-transition>
     </main>
 </body>
+<script>
+    window.isAuthenticated = @json(Auth::check());
+</script>
 
 </html>

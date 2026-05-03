@@ -10,6 +10,6 @@
 
      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
          <x-ui.setting-row label="Focus" name="pomodoro" unit="min" />
-         <x-ui.setting-row label="Break" name="break_time" unit="min" />
+         <x-ui.setting-row label="Break" name="breakTime" unit="min" />
      </div>
  </div>
