@@ -5,3 +5,26 @@
 [x-cloak] {
     display: none !important;
 }
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #616770;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+.task-item {
+    touch-action: none;
+    touch-action: pan-y;
+    user-select: none;
+}

@@ -1,18 +1,36 @@
-import './bootstrap';
-import { createIcons, icons } from 'lucide';
-import Alpine from 'alpinejs';
+import "./bootstrap";
+import Sortable from "sortablejs";
+import Alpine from "alpinejs";
+import { createIcons, icons } from "lucide";
+import { reportHandler } from "./localstorage/handlers/reportHandler";
+import { settingHandler } from "./localstorage/handlers/setting";
+import { timerHandler } from "./localstorage/handlers/pomodoro";
+import { taskHandler } from "./localstorage/handlers/taskHandler";
 
-// Khởi tạo icons ngay lập tức trước khi Alpine xử lý DOM
-createIcons({ icons });
+window.lucide = { createIcons, icons };
 
-import {timerHandler, taskHandler} from './pomodoro';
-import {reportHandler} from './report';
+window.Sortable = Sortable;
+window.Alpine = Alpine;
 
-Alpine.data('timerHandler', timerHandler);
-Alpine.data('taskHandler', taskHandler);
-Alpine.data('reportHandler', reportHandler);
+document.addEventListener("alpine:init", () => {
+    Alpine.data("mainLayout", () => {
+        return {
+            themeColor:
+                document.body.getAttribute("initial-color") || "#AF4949",
+            init() {
+                window.addEventListener("theme-change", (e) => {
+                    this.themeColor = e.detail.color;
+                });
+            },
+        };
+    });
+});
+
+Alpine.data("timerHandler", timerHandler);
+Alpine.data("reportHandler", reportHandler);
+Alpine.data("settingHandler", settingHandler);
+Alpine.data("taskHandler", taskHandler);
 
 Alpine.start();
 
-window.Alpine = Alpine;
-window.createIcons = createIcons;
+createIcons({ icons });

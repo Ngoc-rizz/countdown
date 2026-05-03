@@ -42,7 +42,7 @@ class MakeModule extends Command
         $content = <<<PHP
 <?php
 
-namespace App\Modules\\{$name}\Controllers;
+namespace Modules\\{$name}\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -63,7 +63,7 @@ PHP;
         $content = <<<PHP
 <?php
 
-namespace App\Modules\\{$name}\Services\Contracts;
+namespace Modules\\{$name}\Services\Contracts;
 
 interface {$name}ServiceInterface
 {
@@ -78,9 +78,9 @@ PHP;
         $content = <<<PHP
 <?php
 
-namespace App\Modules\\{$name}\Services;
+namespace Modules\\{$name}\Services;
 
-use App\Modules\\{$name}\Services\Contracts\\{$name}ServiceInterface;
+use Modules\\{$name}\Services\Contracts\\{$name}ServiceInterface;
 
 class {$name}Service implements {$name}ServiceInterface
 {
@@ -98,11 +98,11 @@ PHP;
         $content = <<<PHP
 <?php
 
-namespace App\Modules\\{$name}\Providers;
+namespace Modules\\{$name}\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Modules\\{$name}\Services\\{$name}Service;
-use App\Modules\\{$name}\Services\Contracts\\{$name}ServiceInterface;
+use Modules\\{$name}\Services\\{$name}Service;
+use Modules\\{$name}\Services\Contracts\\{$name}ServiceInterface;
 
 class {$name}ServiceProvider extends ServiceProvider
 {
@@ -128,7 +128,7 @@ PHP;
             $content = <<<PHP
 <?php
 
-namespace App\Modules\\{$name}\Actions;
+namespace Modules\\{$name}\Actions;
 
 class {$name}{$method}Action
 {

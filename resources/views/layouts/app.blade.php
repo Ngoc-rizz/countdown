@@ -16,7 +16,8 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="bg-[#AF4949] font-sans antialiased">
+<body x-cloak x-data="mainLayout" :style="'background-color:' + themeColor"
+    class="font-sans antialiased transition-colors duration-300">
     <x-navigation />
     <main>
         <x-ui.page-transition duration="duration-200" delay="delay-50" distance="translate-y-6">
@@ -24,5 +25,8 @@
         </x-ui.page-transition>
     </main>
 </body>
+<script>
+    window.isAuthenticated = @json(Auth::check());
+</script>
 
 </html>

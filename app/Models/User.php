@@ -7,11 +7,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
+use App\Models\Pomodoro;
+use App\Models\Task;
+use App\Models\Setting;
 
 class User extends Authenticatable implements MustVerifyEmail, JWTSubject
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
+
+    protected static function booted()
+    {
+        static::created(function ($user) {
+            $user->settings()->create([]);
+        });
+    }
 
     public function getJWTIdentifier()
     {
@@ -44,9 +53,9 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
         return $this->hasMany(Task::class);
     }
 
-    public function reports()
+    public function pomodoros()
     {
-        return $this->hasMany(Report::class);
+        return $this->hasMany(Pomodoro::class);
     }
 
     /**

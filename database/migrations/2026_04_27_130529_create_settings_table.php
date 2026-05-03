@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('theme_color')->default('#3B82F6');
-            $table->integer('pomodoro_minutes')->default(25);
-            $table->integer('break_minutes')->default(5);
+            $table->integer('pomodoro_seconds')->default(1500);
+            $table->integer('break_seconds')->default(300);
             $table->boolean('auto_check_tasks')->default(false);
             $table->boolean('sound_enabled')->default(true);
             $table->timestamps();

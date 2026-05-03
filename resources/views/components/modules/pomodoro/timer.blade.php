@@ -1,9 +1,4 @@
-@props(['pomodoroSeconds' => 1500, 'breakSeconds' => 300])
-
-<div x-data="timerHandler({
-    pomodoroSeconds: {{ $pomodoroSeconds }},
-    breakSeconds: {{ $breakSeconds }}
-})" x-cloak
+<div x-data="timerHandler(@js($pomodoro))" x-cloak
     class="bg-white/40 border border-white/40 p-8 rounded-md shadow-[0_20px_50px_rgba(0,0,0,0.1)] w-full max-w-sm mx-auto text-center transition-all duration-500">
 
     {{-- Tab Switcher --}}
@@ -31,17 +26,17 @@
             x-transition:enter-start="opacity-0 translate-y-5" x-transition:enter-end="opacity-100 translate-y-0"
             class="z-10">
             <span class="text-5xl lg:text-7xl font-light font-mono text-white/70 tracking-tight"
-                x-text="formatTime()"></span>
+                x-text="displayTime"></span>
         </div>
     </div>
 
     {{-- Control Buttons --}}
     <div class="flex items-center justify-center space-x-8">
-        <button @click="resetTimer()"
+        <button type="button" @click="resetTimer()"
             class="p-2 lg:p-3 bg-gray-100 text-gray-500 rounded-md border-b-2 border-gray-300 shadow-[0_4px_0_0_rgba(0,0,0,0.1)] active:translate-y-0.5 active:border-b-0 active:shadow-none transition-all">
             <i data-lucide="rotate-ccw" class="w-4 h-4 lg:w-8 lg:h-8 "></i>
         </button>
-        <button @click="isRunning ? pauseTimer() : startTimer()"
+        <button type="button" @click="isRunning ? pauseTimer() : startTimer()"
             class="flex items-center justify-center w-16 lg:w-32 h-8 lg:h-16 bg-gray-800 text-white rounded-md border-b-4 border-gray-950 shadow-[0_8px_0_0_rgba(0,0,0,0.2)] transition-all duration-100 hover:bg-gray-700 active:translate-y-1 active:border-b-0 active:shadow-none">
             <span x-show="!isRunning">
                 <i data-lucide="play" class="w-4 h-4 lg:w-8 lg:h-8 fill-current"></i>
@@ -50,10 +45,9 @@
                 <i data-lucide="pause" class="w-4 h-4 lg:w-8 lg:h-8 fill-current"></i>
             </span>
         </button>
-        <button @click="skipMode()"
+        <button type="button" @click="handleFinished()"
             class="p-2 lg:p-3 bg-gray-100 text-gray-500 rounded-md border-b-2 border-gray-300 shadow-[0_4px_0_0_rgba(0,0,0,0.1)] active:translate-y-0.5 active:border-b-0 active:shadow-none transition-all">
             <i data-lucide="skip-forward" class="w-4 h-4 lg:w-8 lg:h-8 "></i>
         </button>
-
     </div>
 </div>

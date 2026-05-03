@@ -20,6 +20,7 @@
         "alpinejs": "^3.14",
         "chart.js": "^4.5",
         "lucide": "^1.9.0",
+        "sortablejs": "^1.15.7",
         "sweetalert2": "^11.15"
     }
 }
