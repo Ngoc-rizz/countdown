@@ -1,66 +1,131 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Dự án: Pomodoro & Task Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Giới thiệu dự án
 
-## About Laravel
+Pomodoro & Task Management System là một ứng dụng nền tảng web được xây dựng nhằm hỗ trợ người dùng quản lý thời gian hiệu quả theo phương pháp Pomodoro kết hợp với quản lý công việc (Task Management). Giao diện trực quan với các tính năng như đồ thị thống kê, giao diện kéo thả công việc.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 1) Công nghệ sử dụng
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Dự án được xây dựng dựa trên các công nghệ và thư viện mã nguồn mở sau:
 
-## Learning Laravel
+- **Backend:**
+    - PHP (^8.2)
+    - Laravel Framework (^11.31)
+- **Frontend:**
+    - Vite (^6.0)
+    - TailwindCSS (^3.1)
+    - Alpine.js (^3.14)
+    - Chart.js (^4.5) - Hiển thị biểu đồ báo cáo.
+    - SweetAlert2 (^11.15) - Hiển thị thông báo (alerts).
+    - SortableJS (^1.15) - Hỗ trợ thao tác kéo thả (drag & drop) cho task.
+    - Lucide - Icon set.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 2) Cấu trúc thư mục chính
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Dự án sử dụng kiến trúc Domain-Driven Design (DDD) chia nhỏ thành các modules. Cấu trúc thư mục tiêu biểu như sau:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```text
+/
+├── app/                  # Chứa các file cấu hình, Http kernel cốt lõi của Laravel
+├── bootstrap/            # Chứa các file khởi động hệ thống
+├── config/               # Chứa các file cấu hình hệ thống
+├── database/             # Chứa migrations, seeders, factories
+├── modules/              # KIẾN TRÚC MODULAR - Nơi chứa các tính năng nghiệp vụ chính
+│   ├── Auth/             # Module Xác thực (Login, Register...)
+│   ├── Pomodoro/         # Module Quản lý đếm giờ Pomodoro
+│   ├── Report/           # Module Báo cáo thống kê
+│   ├── Settings/         # Module Cài đặt người dùng / Hệ thống
+│   └── Task/             # Module Quản lý công việc (Task)
+├── public/               # Nơi chứa file entry point (index.php) và public assets
+├── resources/            # Nơi chứa các views (Blade), CSS, JS chưa build
+├── routes/               # Nơi chứa các route chính của hệ thống (web, api, console)
+└── tests/                # Nơi chứa các file unit tests & feature tests
+```
 
-## Laravel Sponsors
+Bên trong mỗi Module (VD: `modules/Pomodoro/`) sẽ được chia nhỏ thành các tầng:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- `Actions/`
+- `Controllers/`
+- `DTOs/`
+- `Events/`
+- `Providers/`
+- `Requests/`
+- `Routes/`
+- `Services/`
 
-### Premium Partners
+## 3) Chức năng nổi bật
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+- **Quản lý công việc (Task Management):** Cho phép tạo, sửa, xóa, và kéo thả (drag & drop với SortableJS) các công việc.
+- **Pomodoro Timer:** Hỗ trợ bộ đếm ngược thời gian làm việc chuẩn Pomodoro (Start, Pause, Finish).
+- **Thống kê & Báo cáo:** Tự động thống kê số lượng phiên Pomodoro đã hoàn thành, hiển thị dưới dạng biểu đồ trực quan (sử dụng Chart.js).
+- **Giao diện tương tác:** Tích hợp Alpine.js giúp các components phản hồi nhanh chóng, hiển thị pop-up mượt mà với SweetAlert2.
 
-## Contributing
+## 4) Bảo mật & phân quyền
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- **Xác thực:** Ứng dụng sử dụng Laravel Sanctum để xử lý việc đăng nhập, bảo vệ các endpoint API và duy trì phiên đăng nhập của người dùng một cách an toàn.
+- **Phân quyền (Middleware):** Sử dụng các middleware mặc định của Laravel kết hợp với các chính sách phân quyền theo từng Module nhằm đảm bảo dữ liệu của ai thì chỉ người đó được phép xem và chỉnh sửa (Bảo mật tài nguyên qua các Requests và Middleware).
 
-## Code of Conduct
+## 5) Thiết lập môi trường chạy local
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+1. **Clone dự án về máy:**
 
-## Security Vulnerabilities
+    ```bash
+    git clone https://github.com/Ngoc-rizz/countdown.git
+    cd countdown
+    ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+2. **Cài đặt các thư viện PHP:**
 
-## License
+    ```bash
+    composer install
+    ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+3. **Cài đặt các thư viện Frontend:**
+
+    ```bash
+    yarn install
+    ```
+
+4. **Cấu hình môi trường:**
+   Sao chép file cấu hình mẫu và tạo khóa bảo mật cho ứng dụng:
+
+    ```bash
+    cp .env.example .env
+    php artisan key:generate
+    ```
+
+5. **Thiết lập cơ sở dữ liệu:**
+   Tạo database với tên `countdown` trong MySQL, sau đó chạy lệnh để tạo cơ sở dữ liệu và bảng:
+
+    ```bash
+    php artisan migrate
+    ```
+
+6. **Chạy ứng dụng:**
+   Khởi động máy chủ backend và bộ build frontend:
+
+    ```bash
+    # Terminal 1: Chạy Backend
+    php artisan serve
+
+    # Terminal 2: Chạy Frontend Vite
+    yarn dev
+    ```
+
+    Sau đó truy cập vào: `http://localhost:8000`
+
+## 6) Router
+
+Hệ thống Router được phân bổ linh hoạt, kết hợp giữa `routes/web.php` và thư mục `Routes/` bên trong từng module cụ thể:
+
+- Các route toàn cục hoặc route chung có thể nằm ở `routes/web.php`.
+- Các route chuyên biệt (nghiệp vụ) được định nghĩa tại `modules/{ModuleName}/Routes/` (vd: `api.php`, `web.php`).
+- Khai báo này giúp giảm tải cho file route chính của Laravel, chia để trị dễ bảo trì khi dự án lớn.
+
+## 7) Modular
+
+- Dự án áp dụng triệt để kiến trúc Modular (chia theo miền - Domain).
+- Toàn bộ logic liên quan đến Auth, Pomodoro, Report, Settings, Task được đóng gói vào trong thư mục `modules/` riêng biệt.
+- Mỗi module hoạt động gần như độc lập với Service Provider riêng của mình, giúp codebase tách bạch (Decoupled), dễ dàng phát triển song song trong team, dễ dàng test và nâng cấp tính năng.
